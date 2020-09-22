@@ -1,0 +1,630 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Guia do Orchestrator</title><style>
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="8ac4b00b-55a2-4f83-9165-c92e42bd3310" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">📑</span></div><h1 class="page-title">Guia do Orchestrator</h1></header><div class="page-body"><nav id="0424f73a-93c7-4be8-934b-af299946f853" class="table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c959f01d-88f9-4093-82a3-2c7c09c0b2fe">Introdução</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f75c66c3-b987-45a9-ad89-4f0e6e9f7b5c">Modelo Organizacional do Orchestrator</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fda3b650-35d9-420b-8a25-d707c2b665ec">Inquilinos (Tenant)</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5ae999c4-18d6-4979-9fe3-815c5a6829ca">Compatibilidade futura e Retrocompatibilidade</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#df76becf-70c0-43fc-94fd-93ec8ac8957d">Definições</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#034192ac-35d6-4f9e-915a-d5ff37417f61">Studio e Robôs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ad874444-7d86-49f4-bf6a-0952fd69aefe">Orchestrator</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1af9c1cd-9cca-48c9-9ded-ad31f929963f">Matriz de Compatibilidade</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#30505991-b7b6-448b-9ed0-f457db628ac9">Melhores Práticas</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#83435f50-f491-48b8-a471-a1ef1533ef31">Multi-Tenant</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dd5a00c0-2d59-4b90-abf9-74520ed6f40a">Folders (Pastas)</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ee613558-7bb1-4496-93cc-62f9d309de2a">Robôs</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4f505759-c173-439c-bea3-dfcf40c8bee4">Environments</a></div></nav><h2 id="c959f01d-88f9-4093-82a3-2c7c09c0b2fe" class="block-color-gray_background">Introdução</h2><p id="4cc2dff1-6e50-4e7e-a942-54f51ff8a7b4" class="">O UiPath Orchestrator é uma aplicação web que nos permite instrumentar os robôs uipath em execução de processos de negócio repetitivos.</p><p id="b5a7eb88-73ed-4ac6-a7d4-ff5e0f15f61d" class="">O Orchestrator nos permite gerenciar a criação, monitoração e deploy de recursos no seu ambiente.</p><p id="ea629d7c-409a-47a5-b095-1de94fcbe17d" class="">Funciona como ponto de integração de soluções terceiras e aplicações.</p><p id="e6b5a39b-c1c7-4f2b-8e87-b88aad0dbfe7" class="">Você é capaz de &#x27;debugar&#x27; no Studio com todos os tipos de robôs.</p><p id="2d3c32bf-c634-4e8d-9725-f9e97e8fd996" class="">Principais recursos:</p><ul id="7641c64f-e487-48ce-a33b-a45f60c37d16" class="bulleted-list"><li><strong>Provisionar </strong>- Criar r manter a conexão entre Robos e aplicação web.</li></ul><ul id="93b9b979-1d86-4367-9604-a72930044424" class="bulleted-list"><li><strong>Deploy </strong>- Assegura a entrega correta da versão do pacote ao robô atribuído para execução.</li></ul><ul id="f1094979-4a44-43f1-9bcd-b6b87be0a59e" class="bulleted-list"><li><strong>Configuração </strong>- mantém e fornece ambientes de robô e configuração de processos.</li></ul><ul id="dff309cc-8236-4f5f-ba12-4b51672c0bd3" class="bulleted-list"><li><strong>Queues </strong>- garante distribuição automática de carga de trabalho entre robôs.</li></ul><ul id="6b6c9220-e599-42dd-b19d-a842fde97984" class="bulleted-list"><li><strong>Monitoração </strong>- controla os dados de identificação do robô e mantém as permissões do usuário.</li></ul><ul id="83e55364-48b2-4925-b983-3233a687bc03" class="bulleted-list"><li><strong>Log&#x27;s </strong>- armazena e indexa os logs em um banco de dados SQL e / ou Elasticsearch (dependendo da sua arquitetura e configuração).</li></ul><ul id="badb5b72-01e0-48bd-95aa-c12e94c49ab7" class="bulleted-list"><li><strong>Interconectividade </strong>- Age como ponto centralizador de comunicação para aplicações e soluções de terceiros. </li></ul><h2 id="f75c66c3-b987-45a9-ad89-4f0e6e9f7b5c" class="block-color-gray_background">Modelo Organizacional do Orchestrator</h2><p id="5728daaf-09a1-478b-8f0c-8a263841b72c" class="">O Orchestrator fornece vários recursos que podem ser usados ​​na modelagem de sua implantação para fornecer administração fácil e eficiente, além de garantir isolamento adequado de ativos (assets) e controle de acesso em toda a organização, independentemente do tamanho ou estrutura.</p><p id="77101cc6-c542-4a3e-ac39-e148216fc129" class="">Uma única instância do orquestrador pode ser dividida em vários inquilinos (Tenant), com cada inquilino totalmente isolado de qualquer outro. Nenhuma automação, recurso ou usuário é compartilhado ou acessível por diferentes Tentant.</p><p id="1b8da202-574d-4d5f-b80b-ea6bcc6f0d8d" class="">Cada inquilino pode ser subdividido e organizado em Pastas. Você pode criar quantas pastas clássicas ou modernas forem necessárias para obter a estrutura desejada. Cada tipo de pasta possui recursos e capacidades diferentes, permitindo que você use o tipo apropriado para a maneira em que deseja gerenciar a administração e o compartilhamento de automações em toda a organização.</p><h3 id="fda3b650-35d9-420b-8a25-d707c2b665ec" class="">Inquilinos (Tenant)</h3><p id="15f97eea-5dff-46de-8e4e-8d857694647a" class="">Os Tenant são projetados com o objetivo de isolar completamente todas as entidades do orquestrador (ou seja, robôs, ativos, filas, usuários etc.) entre essas instâncias segregadas da sua implantação, tudo sem a necessidade de manter vários orquestradores. Alguns exemplos de separação do orquestrador em Tenant:</p><ul id="eed309eb-a189-44a0-b493-73cad3f25934" class="bulleted-list"><li>Um Tenant para cada escritório regional da sua empresa, pois os usuários de cada região têm automações específicas para os procedimentos aplicáveis a sua filial.</li></ul><ul id="f5aac8eb-005f-4aba-9177-4a2f5af53f79" class="bulleted-list"><li>Manter vários ambientes de desenvolvimento e teste.</li></ul><ul id="4c3945a5-9ea5-4cac-bd95-01b77e9d0d13" class="bulleted-list"><li>Isolar dados confidenciais, como processos de folha de pagamento ou projetos confidenciais.</li></ul><p id="fb9ec51d-bf4f-405b-9246-8552ea0a9b8e" class="">Portanto, os Tenant são mais bem utilizados em situações em que você deseja que todos os usuários, recursos e configurações de suas soluções de automação sejam gerenciados de forma independente pelos administradores de inquilinos designados.</p><h2 id="5ae999c4-18d6-4979-9fe3-815c5a6829ca" class="">Compatibilidade futura e Retrocompatibilidade</h2><h3 id="df76becf-70c0-43fc-94fd-93ec8ac8957d" class="">Definições</h3><ul id="d1208bf4-674e-467e-b786-42cc8c1397d1" class="bulleted-list"><li><strong>Compatibilidade com versões anteriores</strong> - refere-se à capacidade da nossa plataforma interagir com versões mais antigas do pacote UiPath.</li></ul><ul id="2bc4e58b-27e5-46e9-a208-de8aebdc9620" class="bulleted-list"><li><strong>Compatibilidade futura</strong> - refere-se à capacidade da plataforma interagir com versões futuras do pacote UiPath</li></ul><h3 id="034192ac-35d6-4f9e-915a-d5ff37417f61" class="">Studio e Robôs</h3><p id="88b6421d-c6d6-48ef-9c50-70c746a40e06" class="">Studio e Robôs sempre devem ter a mesma versão. (Ver matriz de compatibilidade)</p><p id="e24413c5-a2fb-4cb2-8141-19100fce28e8" class="">Projetos criados com versões alfa ou beta do Studio podem não ser compatíveis com as compilações mais recentes do Studio, nem podem ser executados por robôs mais recentes.</p><p id="c0ea6688-4292-4ad6-977a-e119ae130ff5" class="">As versões dos pacotes de atividades não dependem das versões do Studio, Robô ou Orchestrator. As únicas exceções são as atividades relacionadas ao orquestrador. Por exemplo, a atividade Iniciar Trabalho (Start Job), que foi introduzida na versão 2018.1, funciona apenas com robôs dessa versão ou superior.</p><h3 id="ad874444-7d86-49f4-bf6a-0952fd69aefe" class="">Orchestrator</h3><p id="58dc6e1a-f59d-4853-9b12-69ce1ff5b5d8" class="">A funcionalidade Folders (Pastas) apresenta uma mudança de paradigma na estrutura e organização da sua instância do Orchestrator. A compatibilidade com versões anteriores é mantida pelo uso de pastas Clássicas, que mantêm a mesma funcionalidade das versões anteriores do Orchestrator, garantindo que os recursos e integrações existentes funcionem sem interrupção.</p><p id="f5c46e33-2b8e-4a80-bc19-36ff2256ad19" class="">Tirar proveito dos recursos e capacidades adicionais das pastas Modernas, no entanto, requer o uso das versões mais recentes de Robô e Atividades.</p><h3 id="1af9c1cd-9cca-48c9-9ded-ad31f929963f" class="">Matriz de Compatibilidade</h3><figure id="80da8e3e-2751-4a11-9da2-74c12472aeb0" class="image"><a href="Guia%20do%20Orchestrator%2080da8e3e27514a119da274c12472aeb0/Untitled.png"><img style="width:861px" src="Guia%20do%20Orchestrator%2080da8e3e27514a119da274c12472aeb0/Untitled.png"/></a></figure><h2 id="30505991-b7b6-448b-9ed0-f457db628ac9" class="block-color-gray_background">Melhores Práticas</h2><h3 id="83435f50-f491-48b8-a471-a1ef1533ef31" class="block-color-orange_background">Multi-Tenant</h3><p id="4bb59327-c981-45a5-87d9-9f57c91a0179" class="">O Orchestrator oferece uma opção de multi-tenant. Usando mais de um tenant, os usuários podem dividir uma instância única do Orchestrator em vários ambientes de implantação, cada um com seus próprios robôs, processos, logs e assim por diante. Todos os Tenant compartilham o mesmo banco de dados do orquestrador.</p><p id="c82285a8-7e96-4f74-b6b0-79698b93d318" class="">Isso permite o isolamento dos recursos desejados do restante da organização. Os recursos de automação são acessíveis somente dentro desse inquilino.</p><p id="79291655-db1d-4d4e-ad57-4cfacb1e4f05" class="">Mais Sobre os Tenants</p><h3 id="dd5a00c0-2d59-4b90-abf9-74520ed6f40a" class="">Folders (Pastas)</h3><p id="df2485ac-4a0b-4010-b4b1-df9195762b85" class=""><strong>Sobre</strong></p><p id="35a4682e-4239-41ba-bf0b-6b05d9eaa1e2" class="">As pastas permitem que você mantenha um controle refinado sobre automações, suas entidades intrínsecas e pessoal em toda a organização. Existem dois tipos de pastas disponíveis no Orchestrator: Clássico e Moderno.</p><p id="032afe02-240d-4422-bb13-aca9c50f53a9" class="">Cada tipo de pasta possui diferentes recursos do orquestrador (por exemplo, processos, trabalhos, ativos) que residem em cada pasta específica. Também existem recursos globais criados no nível do Tenant e disponíveis em todas as pastas de qualquer tipo:</p><p id="ed83bcd9-bbaf-492e-bef7-e60f4fa20b3e" class="">Cada Tenant pode ser ainda mais organizado e gerenciado em Pastas. As pastas permitem limitar o acesso à administração da automação (ou seja, quem pode criar robôs, acessar determinados processos etc.) enquanto compartilha a própria automação nos departamentos necessários da sua organização.</p><h3 id="ee613558-7bb1-4496-93cc-62f9d309de2a" class="">Robôs</h3><p id="2f9da094-4680-47ff-8fe2-0861f0950fe2" class="">O Robot UiPath é o host (equipamento) que executa os processos criados no UiPath Studio. No Orchestrator, uma entidade de robô representa uma imagem do Robot UiPath e controla seus recursos.</p><p id="39ae7f15-b592-46a0-b3d7-5d2fb8e3ed2f" class=""><strong>Para Compreender Melhor</strong></p><div id="37fe2649-0551-4191-890a-72f5541cd4a7" class="column-list"><div id="65048d82-0643-4306-b4a5-afce7a9e8b4f" style="width:18.75%" class="column"><p id="0c6ec8ff-3667-4c0f-81f1-232d4c9ce9d8" class="">Robô Uipath</p><p id="848e9674-6116-49bc-98c8-afc2355fc446" class="block-color-gray_background">Machine</p><p id="c011d4ae-b9b8-4d4f-9496-64d41ee217e4" class="">Robô
+(Orchestrator)</p><p id="565b8343-3f3d-46f1-86a9-cabc2af23778" class="block-color-gray_background">Machine (Orchestrator)</p></div><div id="b7401601-229f-4a92-a964-4638856b643b" style="width:81.25%" class="column"><p id="3cca705a-bc4b-4604-8790-5116eb6565e2" class="">Robô componente da suite Uipath (instalado no equipamento &quot;cliente&quot;)</p><p id="097cd565-0950-44a6-ab03-b604ed98400e" class="block-color-gray_background">Equipamento Físico (ou Virtual) usado para deploy ou host de um Robô</p><p id="f782b9be-6218-4fab-892d-7f0c7dca1498" class="">Entidade do orquestrador que controla os recursos de conexão do UiPath Robot com relação à máquina host na qual está instalado.</p><p id="f84916f0-6945-4308-92e1-32ae2a1ccf4e" class="block-color-gray_background">Entidade do orquestrador que funciona como um gerador de chave da API, oferecendo recursos de autorização para o UiPath Robot.</p></div></div><p id="6d0e12e1-a75e-4f1f-9238-93d5a9ead6eb" class=""><strong>Tipos de Robôs</strong></p><p id="369c092d-387c-468b-8e99-880aaf494d81" class=""><strong><em>Atendidos (Atended)</em></strong></p><p id="fffa93a7-246d-413c-8863-566944ff7e0c" class="">Robôs que dependem de supervisão humana para rodar. São classificados como:</p><ul id="3f1ef90f-bb9b-4d72-9d34-d853b2f38f94" class="bulleted-list"><li><strong>Atendidos </strong>- Funcionam na mesma estação de trabalho que um usuário e são lançados através de eventos do usuário.</li></ul><ul id="a04faff0-6848-422d-99c5-1e0cf10721fa" class="bulleted-list"><li><strong>Studio </strong>- Conecta o Studio do usuário ao Orchestrator por motivos de desenvolvimento.</li></ul><ul id="fea0f945-1b36-4d6d-8947-58a561ace346" class="bulleted-list"><li><strong>StudioX </strong>- Conecta o StudioX do usuário ao Orchestrator por motivos de desenvolvimento.</li></ul><ul id="889f2191-6619-4bc6-9b35-434230e80a04" class="bulleted-list"><li><strong>StudioPro </strong>- Conecta o StudioPro do usuário ao Orchestrator por motivos de desenvolvimento.</li></ul><p id="df70184b-d777-4bd4-bb11-b27bb19f34dc" class=""><strong><em>Não Atendidos (Unatended)</em></strong></p><p id="2f705d59-d315-4759-b6c9-ecf187bcfd5a" class="">Robôs autônomos que não dependem de supervisão humana para executar suas tarefas. São classificados como:</p><ul id="ec98dcb9-953d-4b18-9d52-25bc304f6615" class="bulleted-list"><li>Não Atendidos - É executado sem supervisão humana em ambientes virtuais e pode automatizar qualquer número de processos. Possui todos os recursos de um robô assistido, além de execução remota, monitoramento, agendamento e suporte para filas de trabalho. Pode executar qualquer tipo de processo, incluindo casos de teste.</li></ul><ul id="c3d8bd34-faea-45ab-8c82-39215384dd79" class="bulleted-list"><li>Não Produção - Funciona de forma não atendida para propósito de desenvolvimento apenas. Não executa casos de teste.</li></ul><ul id="13a8074d-3af7-403c-aa2d-63c201e40112" class="bulleted-list"><li>Testes - Funciona de forma não atendida para propósito de desenvolvimento apenas. Apenas executa casos de teste.</li></ul><p id="760d0b45-b25d-44ea-9903-f34507403eb1" class=""><strong><em>Robôs Flutuantes (Floating Robots)</em></strong></p><p id="22199342-1222-4dae-8efc-002e1d11664c" class="">Os robôs flutuantes permitem que vários usuários usem o Robô UiPath em várias estações de trabalho, pois o robô não está vinculado a uma máquina específica, mas ao usuário do AD. Um usuário pode usar Robô UiPath em uma máquina por vez.
+Um usuário que altera a estação de trabalho exige que efetue logout da máquina usada anteriormente e faça login na nova.</p><p id="a858211a-4548-4143-9175-c087f66aafe1" class=""><strong><em>Robôs Padrão (Standart Robots)</em></strong></p><p id="1002ab18-e970-4801-836e-e9100cd36ec2" class="">Um robô padrão restringe o usuário a usar o UiPath Robot em uma única estação de trabalho, pois o robô está vinculado a uma máquina específica, ou seja, aquela definida ao criar o robô padrão no Orchestrator. Recomendado para usuários que sempre trabalham na mesma máquina ou cujo nome permanece o mesmo sempre que o usuário se conecta a ela.
+Alterar a estação de trabalho requer excluir o robô padrão inicial e recriá-lo usando o nome da nova máquina padrão.</p><h3 id="4f505759-c173-439c-bea3-dfcf40c8bee4" class="">Environments</h3><p id="141ebba2-4e54-4ee6-bcba-2103f38a3667" class="">Use nomes e descrições significativos para cada ambiente criado.</p><p id="2a5550fe-4d55-4402-b74c-c4d18db92789" class="">Os ambientes do orquestrador devem mapear os grupos de execução do processo. Cada ambiente deve ter uma função específica na lógica de negócios da empresa.</p><p id="290dae38-2384-45de-8d34-bb4265935b15" class="">Se um robô executar duas funções diferentes, ele poderá ser atribuído a vários ambientes. Se você tiver vários robôs na mesma máquina, é recomendável agrupá-los no mesmo ambiente. Caso contrário, alguns erros podem ocorrer ao implantar versões diferentes do mesmo processo.</p><p id="83134dac-6af3-4ec6-bd1b-13b1d2b0b3c6" class="">O gerenciamento de acesso entre robôs e processos é feito usando os Ambientes corretamente.</p></div></article></body></html>
